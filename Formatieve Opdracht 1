@@ -1,1 +1,103 @@
+import random
 
+def verschilcheck(string1, string2):
+    if len(string1) > len(string2):
+        ind_langere_str = (len(string1))
+    else:
+        ind_langere_str = (len(string2))
+    for i in range(0, ind_langere_str):
+        if string1[i] != string2[i]:
+            print('Het eerste verschil zit op index: ' + str(i))
+            break
+
+def count_1(lst, x):
+    counter = 0
+    for i in lst:
+        if i == x:
+            counter += 1
+    return (counter)
+
+def counter_1_0(lst):
+    if count_1(lst, 1) > count_1(lst, 0) and count_1(lst, 0) <= 12:
+       print("True")
+    else:
+        print('False')
+
+def palindroom(woord):
+    woord2 = woord
+    rev_woord = ''.join(reversed(woord2))
+    if rev_woord == woord:
+        return True
+    else:
+        return False
+
+def palindroom_2(woord):
+    woord2 = woord[::-1]
+    if woord2 == woord:
+        return True
+    else:
+        return False
+
+
+def qs(lst):
+    if len(lst) <= 1:
+        return lst
+    qs_list_low = []
+    qs_list_even = []
+    qs_list_high = []
+    pivot = lst[0]
+    for i in lst:
+        if i > pivot:
+            qs_list_high.append(i)
+        if i < pivot:
+            qs_list_low.append(i)
+        elif i == pivot:
+            qs_list_even.append(i)
+    return qs(qs_list_low) + qs_list_even + qs(qs_list_high)
+
+
+def gemiddelde(lst):
+    return sum(lst) / len(lst)
+
+def gokken():
+    nr = random.randrange(0, 10, 1)
+    x = 0
+    print(nr)
+    while x == 0:
+        gekozen = int(input("Voer een getal in: "))
+        if gekozen == nr:
+            print('Dat klopt')
+            break
+
+def compress(str):
+    return "".join(str.split())
+
+def fibonaci(n):
+   if n <= 1:
+       return n
+   else:
+       return(fibonaci(n-1) + fibonaci(n-2))
+
+def ceasar(str, step):
+    encrypted = []
+    letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+    for i in str:
+        if i == ' ':
+            encrypted.append(' ')
+        else:
+             index = letters.index(i)
+             new_index = index + step
+             encrypted.append(letters[new_index])
+    return encrypted
+
+
+def fizzbuzz(range_1):
+    for i in range(range_1+1):
+        if i % 3 == 0:
+            print("fizz")
+        elif i % 5 == 0:
+            print("buzz")
+        elif i % 3 == 0 and i % 5 == 0:
+            print("fizzbuzz")
+        else:
+            print(i)
