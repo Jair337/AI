@@ -1,39 +1,35 @@
 import random
 
 def zelf_raden():
-    num = (str(random.randrange(1, 6)) + str(random.randrange(1, 6)) + str(random.randrange(1, 6)) + str(random.randrange(1, 6)) + str(random.randrange(1, 6)))
+    num = (str(random.randrange(1, 6)) + str(random.randrange(1, 6)) + str(random.randrange(1, 6)) + str(random.randrange(1, 6))) #Genereert random code
     num = int(num)
     print(num)
-    n = int(input("Vul 5 getallen in:"))
-    if (n == num):
-        print("Goed geraden!")
+    n = int(input("Vul 4 getallen in:")) #Gebruiker vult een gok in
+    if (n == num): #Als de code goed is
+        print("Goed geraden!") 
     else:
-        ctr = 0
-        while (n != num):
-            tot_count = 0
-            ctr += 1
-            count = 0
+        ctr = 0 #Counter die 'attempts' bijhoud
+        while (n != num): #While de code niet is geraden
+            tot_count = 0 #Hoeveeleid getallen die in de code zitten
+            ctr += 1 #Attempts +1
+            count = 0 #Hoeveelheid getallen op een goede plek
             n = str(n)
             num = str(num)
-            correct = ['X'] * 5
-            lst_counted = []
-            for i in n:
-                if i in lst_counted:
+            lst_counted = [] #Houdt bij welke getallen er al zijn geteld
+            for i in n: #Deze for loop checkt hoeveel getallen van de gok er ook in de code zitten
+                if i in lst_counted: #Als het getal al een keer geteld is gaat de functie gewoon door
                     continue
                 else:
-                    tot_count += num.count(i)
-                    lst_counted.append(i)
+                    tot_count += num.count(i) #Als het getal in de code zit telt deze functie hoevaak
+                    lst_counted.append(i) #Dit voegt het getelde getal toe aan een lijst zodat getallen niet 2 keer worden geteld
             for i in range(0, 5):
-                if (n[i] == num[i]):
-                    count += 1
-                    correct[i] = n[i]
+                if (n[i] == num[i]): #Als een getal uit de gok op dezelfde index zit als de code
+                    count += 1 #Gaat de 'op de goede plek counter omhoog
                 else:
                     continue
-            if (count < 4) and (count != 0):
+            if (count != 0):
                 print(str(tot_count) + " nummers zijn goed")
                 print(str(count) + ' nummers zitten op de goede plek')
-                """for i in correct:
-                    print(i, end=' ')"""
                 n = int(input("Vul 5 getallen in: "))
             elif (count == 0):
                 print("Geen een getal klopt")
