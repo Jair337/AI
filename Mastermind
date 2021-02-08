@@ -1,0 +1,55 @@
+import random
+
+def zelf_raden():
+    num = (str(random.randrange(1, 6)) + str(random.randrange(1, 6)) + str(random.randrange(1, 6)) + str(random.randrange(1, 6)) + str(random.randrange(1, 6)))
+    num = int(num)
+    print(num)
+    n = int(input("Vul 5 getallen in:"))
+    if (n == num):
+        print("Goed geraden!")
+    else:
+        ctr = 0
+        while (n != num):
+            tot_count = 0
+            ctr += 1
+            count = 0
+            n = str(n)
+            num = str(num)
+            correct = ['X'] * 5
+            lst_counted = []
+            for i in n:
+                if i in lst_counted:
+                    continue
+                else:
+                    tot_count += num.count(i)
+                    lst_counted.append(i)
+            for i in range(0, 5):
+                if (n[i] == num[i]):
+                    count += 1
+                    correct[i] = n[i]
+                else:
+                    continue
+            if (count < 4) and (count != 0):
+                print(str(tot_count) + " nummers zijn goed")
+                print(str(count) + ' nummers zitten op de goede plek')
+                """for i in correct:
+                    print(i, end=' ')"""
+                n = int(input("Vul 5 getallen in: "))
+            elif (count == 0):
+                print("Geen een getal klopt")
+                n = int(input("Vul 5 getallen ij: "))
+        if n == num:
+            print("Goedzo!")
+            print("Je hebt er ", ctr, " pogingen over gedaan.")
+
+
+zelf_raden()
+
+
+
+
+
+
+
+
+
