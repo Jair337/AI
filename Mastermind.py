@@ -1,51 +1,116 @@
 import random
+from itertools import product
+
+def start():
+    print('Welkom bij mastermind\n')
+    mode = input("Klik '1' als jij zelf wilt raden, klik '2' als de computer moet raden: ")
+    if mode == '1':
+        zelf_raden()
+    if mode == '2':
+        start_simpel()
+
+def start_simpel(code = None, feedback = None, prev_guess = None, algoritme = None):
+    if code == None:
+        code = input('Voer hier je code in: ')
+    if algoritme == None:
+        algoritme = input('Welk algoritme wil je gebruiken?: ')
+    if algoritme == 'simpel':
+        guess = guess_1(prev_guess, feedback)
+        print('Computer gokt ' + str(guess))
+    if code == prev_guess:
+        print('De code is ' + guess)
+    else:
+        input('Klik enter om verder te gaan.')
+        feedback = gen_feedback(code, guess)
+        print(feedback)
+        print(code)
+        print(guess)
+        input('Klik enter om verder te gaan.')
+        start_simpel(code, feedback, guess, 'simpel')
+
+def guess_1(guess, feedback = None):
+    if feedback == None:
+        return '1111'
+    else:
+        guess_alg = computer_gokt_simpel(feedback, guess)
+        return guess_alg
+
+def alle_opties():
+     return list(product('12345', repeat=4))
+
+def gen_feedback(code, guess):
+    goede_plek = 0
+    verkeerde_plek = 0
+    items_not_counted_code = ''
+    items_not_counted_guess = ''
+    for i in range(0, 4):
+        if guess[i] == code[i]:
+            goede_plek += 1
+        else:
+            items_not_counted_code += code[i]
+            items_not_counted_guess += guess[i]
+    for j in items_not_counted_guess:
+        if j in items_not_counted_code:
+            verkeerde_plek += 1
+    return [goede_plek, verkeerde_plek]
 
 def zelf_raden():
-    num = (str(random.randrange(1, 6)) + str(random.randrange(1, 6)) + str(random.randrange(1, 6)) + str(random.randrange(1, 6))) #Genereert random code
+    num = (str(random.randrange(1, 6)) + str(random.randrange(1, 6)) + str(random.randrange(1, 6)) +  str(random.randrange(1, 6)))
     num = int(num)
     print(num)
-    n = int(input("Vul 4 getallen in:")) #Gebruiker vult een gok in
-    if (n == num): #Als de code goed is
-        print("Goed geraden!") 
+    n = int(input("Vul 4 getallen in:"))
+    if (n == num):
+        print("Goed geraden!")
     else:
-        ctr = 0 #Counter die 'attempts' bijhoud
-        while (n != num): #While de code niet is geraden
-            tot_count = 0 #Hoeveeleid getallen die in de code zitten
-            ctr += 1 #Attempts +1
-            count = 0 #Hoeveelheid getallen op een goede plek
+        ctr = 0
+        while (n != num):
+            tot_count = 0
+            ctr += 1
+            count = 0
             n = str(n)
             num = str(num)
-            lst_counted = [] #Houdt bij welke getallen er al zijn geteld
-            for i in n: #Deze for loop checkt hoeveel getallen van de gok er ook in de code zitten
-                if i in lst_counted: #Als het getal al een keer geteld is gaat de functie gewoon door
+            correct = ['X'] * 4
+            lst_counted = []
+            for i in n:
+                if i in lst_counted:
                     continue
                 else:
-                    tot_count += num.count(i) #Als het getal in de code zit telt deze functie hoevaak
-                    lst_counted.append(i) #Dit voegt het getelde getal toe aan een lijst zodat getallen niet 2 keer worden geteld
-            for i in range(0, 5):
-                if (n[i] == num[i]): #Als een getal uit de gok op dezelfde index zit als de code
-                    count += 1 #Gaat de 'op de goede plek counter omhoog
+                    tot_count += num.count(i)
+                    lst_counted.append(i)
+            for i in range(0, 4):
+                if (n[i] == num[i]):
+                    count += 1
+                    correct[i] = n[i]
                 else:
                     continue
-            if (count != 0):
+            if (count < 4) and (count != 0):
                 print(str(tot_count) + " nummers zijn goed")
                 print(str(count) + ' nummers zitten op de goede plek')
-                n = int(input("Vul 5 getallen in: "))
+                """for i in correct:
+                    print(i, end=' ')"""
+                n = int(input("Vul 4 getallen in: "))
             elif (count == 0):
                 print("Geen een getal klopt")
-                n = int(input("Vul 5 getallen ij: "))
+                n = int(input("Vul 4 getallen in: "))
         if n == num:
             print("Goedzo!")
-            print("Je hebt er ", ctr, " pogingen over gedaan.")
+            print("Je hebt er " + str(ctr) + " pogingen over gedaan.")
 
-
-zelf_raden()
-
-
-
-
-
-
-
-
-
+def computer_gokt_simpel(feedback, guess):
+    for comb in alle_opties():
+        goede_plek = 0
+        verkeerde_plek = 0
+        items_not_counted_code = ''
+        items_not_counted_guess = ''
+        for i in range(0, 4):
+            if guess[i] == comb[i]:
+                goede_plek += 1
+            else:
+                items_not_counted_code += guess[i]
+                items_not_counted_guess += comb[i]
+        for j in items_not_counted_guess:
+            if j in items_not_counted_guess:
+                verkeerde_plek += 1
+        if[goede_plek, verkeerde_plek] == feedback:
+            return comb
+start()
