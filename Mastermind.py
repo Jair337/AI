@@ -1,6 +1,15 @@
 import random
 from itertools import product
 
+
+# Docstrings ontbreken
+# Goed gebruik van functies
+# Engels en nederlands door elkaar
+# Gen feedback en computer_gokt_simpel lijken nogal op elkaar, kijk of je minder duplicate code kunt krijgen.
+# Bij python is camelCasing de standaard.
+# Code is goed te volgen.
+
+
 def start():
     print('Welkom bij mastermind\n')
     mode = input("Klik '1' als jij zelf wilt raden, klik '2' als de computer moet raden: ")
@@ -9,7 +18,8 @@ def start():
     if mode == '2':
         start_simpel()
 
-def start_simpel(code = None, feedback = None, prev_guess = None, algoritme = None):
+
+def start_simpel(code=None, feedback=None, prev_guess=None, algoritme=None):
     if code == None:
         code = input('Voer hier je code in: ')
     if algoritme == None:
@@ -28,15 +38,18 @@ def start_simpel(code = None, feedback = None, prev_guess = None, algoritme = No
         input('Klik enter om verder te gaan.')
         start_simpel(code, feedback, guess, 'simpel')
 
-def guess_1(guess, feedback = None):
+
+def guess_1(guess, feedback=None):
     if feedback == None:
         return '1111'
     else:
         guess_alg = computer_gokt_simpel(feedback, guess)
         return guess_alg
 
+
 def alle_opties():
-     return list(product('12345', repeat=4))
+    return list(product('12345', repeat=4))
+
 
 def gen_feedback(code, guess):
     goede_plek = 0
@@ -54,8 +67,10 @@ def gen_feedback(code, guess):
             verkeerde_plek += 1
     return [goede_plek, verkeerde_plek]
 
+
 def zelf_raden():
-    num = (str(random.randrange(1, 6)) + str(random.randrange(1, 6)) + str(random.randrange(1, 6)) +  str(random.randrange(1, 6)))
+    num = (str(random.randrange(1, 6)) + str(random.randrange(1, 6)) + str(random.randrange(1, 6)) + str(
+        random.randrange(1, 6)))
     num = int(num)
     print(num)
     n = int(input("Vul 4 getallen in:"))
@@ -96,6 +111,7 @@ def zelf_raden():
             print("Goedzo!")
             print("Je hebt er " + str(ctr) + " pogingen over gedaan.")
 
+
 def computer_gokt_simpel(feedback, guess):
     for comb in alle_opties():
         goede_plek = 0
@@ -111,6 +127,8 @@ def computer_gokt_simpel(feedback, guess):
         for j in items_not_counted_guess:
             if j in items_not_counted_guess:
                 verkeerde_plek += 1
-        if[goede_plek, verkeerde_plek] == feedback:
+        if [goede_plek, verkeerde_plek] == feedback:
             return comb
+
+
 start()
